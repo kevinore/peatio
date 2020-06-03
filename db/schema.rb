@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_153429) do
+ActiveRecord::Schema.define(version: 2020_06_03_164002) do
 
   create_table "accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "member_id", null: false
@@ -102,7 +102,10 @@ ActiveRecord::Schema.define(version: 2020_05_13_153429) do
     t.boolean "withdrawal_enabled", default: true, null: false
     t.bigint "base_factor", default: 1, null: false
     t.integer "precision", limit: 1, default: 8, null: false
+    t.text "description"
+    t.string "homepage"
     t.string "icon_url"
+    t.decimal "price", precision: 32, scale: 16
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["position"], name: "index_currencies_on_position"
