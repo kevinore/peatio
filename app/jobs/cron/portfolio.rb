@@ -95,8 +95,9 @@ module Jobs::Cron
 
       def process_currency(portfolio_currency)
         values = []
+        # We use MIN function here instead of ANY_VALUE to be compatible with more MySQL versions
         ActiveRecord::Base.connection
-          .select_all("SELECT MAX(id) id, ANY_VALUE(reference_type) reference_type, ANY_VALUE(reference_id) reference_id " \
+          .select_all("SELECT MAX(id) id, MIN(reference_type) reference_type, MIN(reference_id) reference_id " \
                       "FROM liabilities WHERE id > #{max_liability(portfolio_currency)} " \
                       "AND ((reference_type IN ('Trade','Deposit', 'Adjustment') AND code IN (201,202)) " \
                       "OR (reference_type = 'Withdraw' AND code IN (211,212))) GROUP BY reference_id ORDER BY MAX(id) ASC LIMIT 10000")
